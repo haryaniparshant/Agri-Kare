@@ -18,7 +18,7 @@ import { Provider as AuthProvider } from './src/context/AuthContext';
 
 
 const switchNavigator = createSwitchNavigator({
-  Resolve: ResolveAuthScreen,
+  Resolve: DiseaseDetection,
   loginFlow: createStackNavigator({
     Welcome: Welcome,
     Signup: Signup,
