@@ -10,13 +10,13 @@ const authReducer = (state,action) => {
         case 'add_error':
             return {...state,errorMessage: action.payload};
         case 'sign_in':
-            return {errorMessage: '',token:action.payload};
+            return {...state, errorMessage: '',token:action.payload.token, udata: action.payload.udata};
         case 'clear_error_message':
             return {...state, errorMessage:''};
         case 'signout':
-            return {token: null, errorMessage: ''};
+            return {token: null, errorMessage: '', udata: null};
         case 'set_udata':
-            return {...state, name: action.payload.name, dob: action.payload.dob, CNIC: action.payload.CNIC, email: action.payload.email, password: action.payload.password };
+            return {...state, udata: {name: action.payload.name, dob: action.payload.dob, CNIC: action.payload.CNIC, email: action.payload.email, password: action.payload.password }};
         default:
             return state;
     };
@@ -31,8 +31,8 @@ const tryLocalSignin = dispatch => async () =>{
     if(token){
         const temp = await AsyncStorage.getItem('udata');
         const udata = JSON.parse(temp);
-        dispatch({type:'sign_in',payload:token});
-        dispatch({type:'set_udata',payload:udata});
+        console.log(udata);
+        dispatch({type:'sign_in',payload:{token,udata}});
         dispatch
         navigate('mainFlow');
     }
@@ -52,7 +52,8 @@ const signup = (dispatch) => async ({usercode, actualcode, fdata})=>{
         try{
             const response = await jsonServer.post('/signup',{fdata: fdata});
             await AsyncStorage.setItem('token', response.data.token);
-            dispatch({type: 'sign_in', payload: response.data.token});
+            await AsyncStorage.setItem('udata', JSON.stringify(fdata));
+            dispatch({type: 'sign_in', payload: {token: response.data.token, udata: fdata}});
             if (response['data']['message'] === 'User Registered Successfully') {
                 alert(response['data']['message']);
                 navigate('mainFlow');
@@ -79,15 +80,14 @@ const signin = (dispatch) => async ({email, password})=>{
 
     try{
         const response = await jsonServer.post('/signin',{email,password})
-
         await AsyncStorage.setItem('token', response.data.token);
-        await AsyncStorage.setItem('udata', JSON.stringify(state.udata));
-        dispatch({type: 'sign_in', payload: response.data.token});
+        await AsyncStorage.setItem('udata', JSON.stringify(response.data.savedUser));
+        dispatch({type: 'sign_in', payload: {token : response.data.token, udata: response.data.savedUser}});
         alert("Login Successfully");
         navigate('mainFlow');
-
     }
     catch(err){
+        console.log(err);
         dispatch({type: 'add_error', payload: 'Something went wrong with signin'})
     }
 };
@@ -111,10 +111,11 @@ else {
     }}
 
     try{
-        const response = await jsonServer.post('/verify',{fdata})
-        dispatch({type: 'set_udata', payload: response.data.udata});
+        const response = await jsonServer.post('/verify',{fdata});
         alert(response.data.message);
-        navigate('Verification',{VerificationCode:response.data.udata[0]?.VerificationCode, fdata: response.data.udata});
+        const VerificationCode = response.data.udata[0]?.VerificationCode;
+        delete response.data.udata[0].VerificationCode;
+        navigate('Verification',{VerificationCode: VerificationCode, fdata: response.data.udata[0]});
     }
     catch(err){
         console.log(err)
