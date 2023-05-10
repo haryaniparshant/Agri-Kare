@@ -3,10 +3,13 @@ import React, { useState, useContext } from 'react'
 import { head1,head2,errormessage } from '../common/form'
 import {button1} from '../common/button'
 import jsonServer from '../api/jsonServer'
-import { Context as AuthContext } from '../context/AuthContext'
+import {navigate} from '../navigationRef';
+import { Context as AuthContext } from '../context/AuthContext';
 
 
 const Signup = ({navigation}) => {
+    const {state, clearErrorMessage, verification} = useContext(AuthContext);
+
 
     const [fdata, setfdata] = useState({
         name :'',
@@ -16,44 +19,6 @@ const Signup = ({navigation}) => {
         dob : '',
         CNIC:'',
     })
-    const [errormsg, seterrormsg] = useState(null);
-    const SendtoBackend = () =>{
-        
-        if (fdata.name == '' ||
-            fdata.email == '' ||
-            fdata.password == '' ||
-            fdata.cpassword == '' ||
-            fdata.dob == '' ||
-            fdata.CNIC == '') {
-                seterrormsg('All fields are required');
-            return;
-        }
-        else {
-            if (fdata.password != fdata.cpassword) {
-                seterrormsg('Password and Confirm Password must be same');
-                return;
-            }  else{
-                jsonServer.post('/verify', {
-                    fdata
-                })  .then(
-                    res =>{
-                        console.log(res.data);
-                        if(res.data.message === "Verification Code Sent to your Email"){
-                            console.log(res.data.udata);
-                            alert(res.data.message);
-                            navigation.navigate('Verification',{udata:res.data.udata})
-                        }
-                        if(res.error){
-                            seterrormsg(res.error);
-                        }   
-                    }
-                ).catch(err =>{
-                    console.log(err);
-                })
-            }
-           
-        }
-    }
   return (
     <ScrollView>
       <Text style={styles.h1}>Agri-Kare</Text>
@@ -66,44 +31,44 @@ const Signup = ({navigation}) => {
 
            <View style={styles.formgroup}>
                 {
-                        errormsg ? <Text style={errormessage}>{errormsg}</Text> : null
+                    state.errorMessage ? <Text style={errormessage}>{state.errorMessage}</Text> : null
                  }
                 <Text style={styles.label}>Name</Text>
                 <TextInput style={styles.input} placeholder="Enter your Name"
                     onChangeText={(text) => setfdata({...fdata,name:text})}
-                    onPressIn={()=>{seterrormsg(null)}}
+                    onPressIn={clearErrorMessage}
                 />
                  
                 <Text style={styles.label}>Email</Text>
                 <TextInput style={styles.input} placeholder="something@email.com"
                     onChangeText={(text) => setfdata({...fdata,email:text})}
-                    onPressIn={()=>{seterrormsg(null)}}
+                    onPressIn={clearErrorMessage}
                 />
 
                 <Text style={styles.label}>Password</Text>
                 <TextInput style={styles.input} placeholder="Enter your password"
                     secureTextEntry={true}
                     onChangeText={(text) => setfdata({...fdata,password:text})}
-                    onPressIn={()=>{seterrormsg(null)}}
+                    onPressIn={clearErrorMessage}
                 />
 
                 <Text style={styles.label}>Re-Enter Password</Text>
                 <TextInput style={styles.input} placeholder="Confirm your password"
                     secureTextEntry={true}
                     onChangeText={(text) => setfdata({...fdata,cpassword:text})}
-                    onPressIn={()=>{seterrormsg(null)}}
+                    onPressIn={clearErrorMessage}
                 />
 
                 <Text style={styles.label}>Date of Birth</Text>
                 <TextInput style={styles.input} placeholder="01-01-2001"
                     onChangeText={(text) => setfdata({...fdata,dob:text})}
-                    onPressIn={()=>{seterrormsg(null)}}
+                    onPressIn={clearErrorMessage}
                 />
 
                 <Text style={styles.label}>CNIC</Text>
                 <TextInput style={styles.input} placeholder="12345-1234567-8"
                     onChangeText={(text) => setfdata({...fdata,CNIC:text})}
-                    onPressIn={()=>{seterrormsg(null)}}
+                    onPressIn={clearErrorMessage}
                 />
 
               
@@ -111,7 +76,7 @@ const Signup = ({navigation}) => {
                     <Text style={styles.link}>Forgot Password?</Text>
                 </View> */}
                 <TouchableOpacity onPress={()=>{
-                        SendtoBackend();
+                        verification({fdata});
                     }}>
                        <Text style={button1}
                         

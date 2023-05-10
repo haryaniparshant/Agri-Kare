@@ -1,9 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View , Image} from 'react-native'
-import React from 'react'
+import React, {useContext} from 'react'
 import {button1} from '../common/button'
 import logo from '../../assets/logo.jpeg'
+import { Context as AuthContext } from '../context/AuthContext'
 
 const Homepage = ({navigation}) => {
+
+  const { signout } = useContext(AuthContext)
+
+
   return (
     <View style={styles.container}>
     <Image style={styles.welcome} source={logo}/>
@@ -15,6 +20,9 @@ const Homepage = ({navigation}) => {
     {/* //TO-DO buttons bhtr krny hain */}
     <Text style={button1}onPress={() => navigation.navigate('DiseaseDetection')}>
           Scan For disease detection
+      </Text>
+      <Text style={button1} onPress={signout}>
+          Sign Out
       </Text>
     
   </View>

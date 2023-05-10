@@ -1,54 +1,27 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState ,useEffect} from 'react'
+import React, { useState ,useEffect, useContext} from 'react'
 import { head1,head2,errormessage } from '../common/form'
 import {button1} from '../common/button'
 import jsonServer from '../api/jsonServer'
 import axios from 'axios'
-const Verification = ({navigation, route}) => {
-    
-    const {udata} = route.params;
+import {navigate} from "../navigationRef";
+import { Context as AuthContext } from '../context/AuthContext';
 
-    const [errormsg, seterrormsg] = useState(null);
+const Verification = ({navigation}) => {
+
+    const VerificationCode = navigation.getParam('VerificationCode');
+    const fdata = navigation.getParam('fdata');
+    const {clearErrorMessage, state, signup} = useContext(AuthContext);
+
     const [usercode, setusercode] = useState("xxxx");
     const [actualcode, setactualcode] = useState(null);
+
     useEffect(() => {
-        setactualcode(udata[0]?.VerificationCode);
+        setactualcode(VerificationCode);
+        console.log(VerificationCode);
+        console.log(fdata);
     }, [])
-    const SendtoBackend = () =>{
-        console.log(usercode);
-        if (usercode == 'XXXX' || usercode == '') {
-            seterrormsg('Please enter the code');
-            return;
-        }
 
-        else if (usercode == actualcode) {
-            // console.log('correct code');
-            const fdata = {
-                name: udata[0]?.name,
-                email: udata[0]?.email,
-                password: udata[0]?.password,
-                dob: udata[0]?.dob,
-                CNIC: udata[0]?.CNIC,
-            }
-            jsonServer.post('/signup', {
-                fdata
-            }).then(res =>{
-                console.log("message");
-                console.log(res);
-                if (res['data']['message'] === 'User Registered Successfully') {
-                    alert(res['data']['message']);
-                    navigation.navigate('Signin')
-                }
-                else {
-                    alert("Something went wrong !! Try Signing Up Again");
-
-                }
-            })
-        }else if (usercode != actualcode) {
-            seterrormsg('Incorrect code');
-            return;
-        }
-    }
   return (
     <View>
       <Text style={styles.h1}>Agri-Kare</Text>
@@ -59,20 +32,20 @@ const Verification = ({navigation, route}) => {
 
            <View style={styles.formgroup}>
                 {
-                        errormsg ? <Text style={errormessage}>{errormsg}</Text> : null
+                        state.errorMessage ? <Text style={errormessage}>{state.errorMessage}</Text> : null
                  }
                 <Text style={styles.label}></Text>
                 <TextInput style={styles.input}
                     placeholder="Enter 6 digit code"
                     secureTextEntry={true}
                     onChangeText={(text) => setusercode(text)}
-                    onPressIn={()=>{seterrormsg(null)}}
+                    onPressIn={clearErrorMessage}
                 />
                 {/* <View>
                     <Text style={styles.link}>Forgot Password?</Text>
                 </View> */}
                     <Text style={button1} onPress={()=>{
-                        SendtoBackend();
+                        signup({usercode,actualcode, fdata});
                     }}>Verify</Text>
                     <Text style={styles.link2}>Don't have an account?&nbsp;
                     <Text style={styles.login} onPress={()=> navigation.navigate('Signup')}>Signup</Text>

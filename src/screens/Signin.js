@@ -8,35 +8,10 @@ import { Context as AuthContext } from '../context/AuthContext'
 
 const Signin = ({navigation}) => {
 
-    const [fdata, setfdata] = useState({
-        email:'',
-        password:'',
-    })
-    const [errormsg, seterrormsg] = useState(null);
-    const SendtoBackend = ()=>{
-        //console.log(fdata);
-        if (fdata.email == '' || fdata.password == '') {
-            seterrormsg('All fields are required');
-            return;
-        }else{
-            jsonServer.post('/signin', {
-                fdata
-            }) .then( res =>{
-                     console.log(res);
-                    
-                    if(res['data']['error'] === "Invalid Credentials" ){
-                        seterrormsg("Something went wrong");
-                        return;
-                    }else{
-                        console.log('here')
-                        alert("Login Successfully");
-                    }   navigation.navigate('Homepage');
-                }
-            ).catch(err =>{
-                console.log(err.data);
-            })
-        }
-    }
+    const {signin, state, clearErrorMessage} = useContext(AuthContext);
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    
   return (
     <View>
       <Text style={styles.h1}>Agri-Kare</Text>
@@ -46,25 +21,23 @@ const Signin = ({navigation}) => {
            <Text style={head2}>Sign in to continue</Text>
 
            <View style={styles.formgroup}>
-                {
-                        errormsg ? <Text style={errormessage}>{errormsg}</Text> : null
-                 }
+                {state.errorMessage ? <Text style={errormessage}>{state.errorMessage}</Text> : null}
                 <Text style={styles.label}>Email</Text>
                 <TextInput style={styles.input}
-                     onChangeText={(text) => setfdata({...fdata,email:text})}
-                     onPressIn={()=>{seterrormsg(null)}}
+                     onChangeText={setEmail}
+                     onPressIn={clearErrorMessage}
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput style={styles.input}
                     secureTextEntry={true}
-                    onChangeText={(text) => setfdata({...fdata,password:text})}
-                    onPressIn={()=>{seterrormsg(null)}}
+                    onChangeText={setPassword}
+                    onPressIn={clearErrorMessage}
                 />
                 <View>
                     <Text style={styles.link}>Forgot Password?</Text>
                 </View>
                     <Text style={button1} onPress={()=>{
-                        SendtoBackend();
+                        signin({email,password});
                     }}>Login</Text>
                     <Text style={styles.link2}>Don't have an account?&nbsp;
                     <Text style={styles.login} onPress={()=> navigation.navigate('Signup')}>Signup</Text>
