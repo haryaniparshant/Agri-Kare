@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Button ,StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { ListItem } from "react-native-elements";
 
 
 
 export default RecommendationPage = ({navigation}) => {
     const Crop = navigation.getParam('Crop');
     const Disease = navigation.getParam('Disease');
+
+    const [pesticides, setData] = useState(null);
 
     const crop_disease = async () => {
         const formData = new FormData();
@@ -21,28 +24,36 @@ export default RecommendationPage = ({navigation}) => {
           .then(response => response.json())
           .then(data => {
             console.log(data);
+            setData(data)
           })
           .catch(error => console.error(error));
       };
 
-    crop_disease()
+      useEffect(()=>{
+        if(Crop != "Crop_Not_in_Database"){
+            crop_disease();
+        }
+      },[])
+
     return <View>
         <Text style={{fontSize: 24, fontWeight: 'bold', margin: 15}}>{Crop}  {Disease}</Text>
-        {/* <FlatList
+        <FlatList
         data={pesticides}
-        keyExtractor={item => item._id}
+        keyExtractor={item => item.Brand_Name  + item.Brand}
         renderItem={({item}) =>{
             return <TouchableOpacity onPress={() =>{
                 // navigation.navigate('TrackDetail', {_id : item._id})
             }}>
-                <ListItem>
+                <ListItem style={styles.item}>
                 <ListItem.Content>
-                    <ListItem.Title>{item.Brand_Name}</ListItem.Title>
+                    <ListItem.Title style={{fontSize: 20}}>{item.Brand_Name}</ListItem.Title>
+                    <ListItem.Subtitle>Brand : {item.Brand}</ListItem.Subtitle>
+                    <ListItem.Subtitle>Dosage : {item.Dosage_per_Acre}</ListItem.Subtitle>
                 </ListItem.Content>
                 </ListItem>
             </TouchableOpacity>
         }}
-        /> */}
+        />
     </View>
 };
 
@@ -52,5 +63,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F5FCFF',
+      },
+
+      item: {
+        padding: 10,
+        marginBottom: 10,
+        backgroundColor: 'rgba(247,247,247,1.0)',
       },
 })
