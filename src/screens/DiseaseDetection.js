@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, Image  } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import RecommendationPage from "./RecommendationPage";
+import { navigate } from "../navigationRef";
 
 
 
@@ -24,7 +26,7 @@ const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
-    quality: 1,
+    quality: 1.0,
   });
 
   console.log(result);
@@ -52,7 +54,7 @@ const pickImage = async () => {
         type: 'image/jpeg',
         name: 'photo.jpg',
       });
-      await fetch('https://d10b-2407-aa80-15-e0a2-6031-b60c-7d48-a2fe.ngrok-free.app/upload',{
+      await fetch('https://b380-2407-aa80-15-e0a2-18e4-ec36-1364-7f79.ngrok-free.app/upload',{
           method: 'POST',
           body: formData,
           headers: {
@@ -62,6 +64,7 @@ const pickImage = async () => {
         .then(response => response.json())
         .then(data => {
           console.log(data);
+          navigate('RecommendationPage',{Crop: data.Crop, Disease: data.Disease});
         })
         .catch(error => console.error(error));
     };

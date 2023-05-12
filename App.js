@@ -15,6 +15,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { setNavigator } from './src/navigationRef';
 import { Provider as AuthProvider } from './src/context/AuthContext';
+import RecommendationPage from './src/screens/RecommendationPage';
 
 
 const switchNavigator = createSwitchNavigator({
@@ -33,6 +34,7 @@ const switchNavigator = createSwitchNavigator({
     Community: Community,
     Homepage: Homepage,
     Pending: Pending,
+    RecommendationPage: RecommendationPage,
     },{
       initialRouteName: 'Homepage',
     }),
