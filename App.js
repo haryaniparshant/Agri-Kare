@@ -20,7 +20,7 @@ import PesticideDetail from './src/screens/PesticideDetail';
 import SearchCrop from './src/screens/SearchCrop';
 
 const switchNavigator = createSwitchNavigator({
-  Resolve: SearchCrop,
+  Resolve: ResolveAuthScreen,
   loginFlow: createStackNavigator({
     Welcome: Welcome,
     Signup: Signup,
