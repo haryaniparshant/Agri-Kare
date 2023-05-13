@@ -16,10 +16,11 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { setNavigator } from './src/navigationRef';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import RecommendationPage from './src/screens/RecommendationPage';
-
+import PesticideDetail from './src/screens/PesticideDetail';
+import SearchCrop from './src/screens/SearchCrop';
 
 const switchNavigator = createSwitchNavigator({
-  Resolve: DiseaseDetection,
+  Resolve: SearchCrop,
   loginFlow: createStackNavigator({
     Welcome: Welcome,
     Signup: Signup,
@@ -35,6 +36,8 @@ const switchNavigator = createSwitchNavigator({
     Homepage: Homepage,
     Pending: Pending,
     RecommendationPage: RecommendationPage,
+    PesticideDetail: PesticideDetail,
+    SearchCrop : SearchCrop,
     },{
       initialRouteName: 'Homepage',
     }),

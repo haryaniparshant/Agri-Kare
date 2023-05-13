@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Button ,StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { ListItem } from "react-native-elements";
+import { navigate } from "../navigationRef";
 
 
 
@@ -14,7 +15,7 @@ export default RecommendationPage = ({navigation}) => {
         const formData = new FormData();
         formData.append("crop", Crop)
         formData.append("disease", Disease)
-        await fetch('https://b380-2407-aa80-15-e0a2-18e4-ec36-1364-7f79.ngrok-free.app/recommend',{
+        await fetch('https://980a-2407-aa80-15-e0a2-d46e-b1db-f88d-d2e.ngrok-free.app/recommend',{
             method: 'POST',
             body: formData,
             headers: {
@@ -33,7 +34,7 @@ export default RecommendationPage = ({navigation}) => {
         if(Crop != "Crop_Not_in_Database"){
             crop_disease();
         }
-      },[])
+      },[Crop, Disease])
 
     return <View>
         <Text style={{fontSize: 24, fontWeight: 'bold', margin: 15}}>{Crop}  {Disease}</Text>
@@ -42,7 +43,7 @@ export default RecommendationPage = ({navigation}) => {
         keyExtractor={item => item.Brand_Name  + item.Brand}
         renderItem={({item}) =>{
             return <TouchableOpacity onPress={() =>{
-                // navigation.navigate('TrackDetail', {_id : item._id})
+                navigate('PesticideDetail', {item})
             }}>
                 <ListItem style={styles.item}>
                 <ListItem.Content>

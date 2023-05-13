@@ -3,6 +3,7 @@ import React, {useContext} from 'react'
 import {button1} from '../common/button'
 import logo from '../../assets/logo.jpeg'
 import { Context as AuthContext } from '../context/AuthContext'
+import SearchCrop from './SearchCrop'
 
 const Homepage = ({navigation}) => {
 
@@ -20,6 +21,9 @@ const Homepage = ({navigation}) => {
     {/* //TO-DO buttons bhtr krny hain */}
     <Text style={button1}onPress={() => navigation.navigate('DiseaseDetection')}>
           Scan For disease detection
+      </Text>
+      <Text style={button1}onPress={() => navigation.navigate('SearchCrop')}>
+          Search By Crop Name and Disease Name
       </Text>
       <Text style={button1} onPress={signout}>
           Sign Out
