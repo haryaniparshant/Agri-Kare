@@ -15,7 +15,7 @@ export default RecommendationPage = ({navigation}) => {
         const formData = new FormData();
         formData.append("crop", Crop)
         formData.append("disease", Disease)
-        await fetch('https://980a-2407-aa80-15-e0a2-d46e-b1db-f88d-d2e.ngrok-free.app/recommend',{
+        await fetch('https://9572-125-209-114-66.ngrok-free.app/recommend',{
             method: 'POST',
             body: formData,
             headers: {

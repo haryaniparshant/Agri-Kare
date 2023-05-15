@@ -7,7 +7,7 @@ import SearchCrop from './SearchCrop'
 
 const Homepage = ({navigation}) => {
 
-  const { signout } = useContext(AuthContext)
+  const { state, signout } = useContext(AuthContext)
 
 
   return (
@@ -28,6 +28,7 @@ const Homepage = ({navigation}) => {
       <Text style={button1} onPress={signout}>
           Sign Out
       </Text>
+      {state.udata.isAdmin}
     
   </View>
   )

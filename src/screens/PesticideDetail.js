@@ -15,7 +15,7 @@ const PesticideDetail = ({navigation}) => {
       const formData = new FormData();
       formData.append("Brand", Detail.Brand);
       formData.append("Brand_Name", Detail.Brand_Name);
-      await fetch('https://980a-2407-aa80-15-e0a2-d46e-b1db-f88d-d2e.ngrok-free.app/detail',{
+      await fetch('https://9572-125-209-114-66.ngrok-free.app/detail',{
           method: 'POST',
           body: formData,
           headers: {

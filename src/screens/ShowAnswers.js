@@ -8,14 +8,17 @@ import { navigate } from '../navigationRef';
 
 
 
-const Community = ({navigation}) => {
+const ShowAnswers = ({navigation}) => {
 
-  const [questions, setQuestions] = useState(null);
+    const question_id = navigation.getParam('question_id');
+    console.log(question_id);
 
-  const getQuestions = async () => {
+  const [answers, setAnswers] = useState(null);
+
+  const getAnswers = async () => {
     try{
-      const response = await jsonServer.get('/questions');
-      setQuestions(response.data);
+      const response = await jsonServer.get('/answers');
+      setAnswers(response.data);
       console.log(response.data);
     }
     catch(e){
@@ -32,25 +35,25 @@ const Community = ({navigation}) => {
   return (
         <View style={styles.container}>
         <NavigationEvents
-        onWillFocus={getQuestions}
+        onWillFocus={getAnswers}
         />
-        {questions? <FlatList
-        data={questions}
+        {answers? <FlatList
+        data={answers}
         keyExtractor={item => item._id}
         renderItem={({item}) =>{
             return <TouchableOpacity style={{flexDirection : 'row'}}  onPress={() =>{
-              navigate('ShowAnswers', {question_id : item._id})
+              navigate('CreateAnswer', {question_id : item._id})
             }}>
-              <Text style={styles.item}>{item.question_text}</Text>
+              <Text style={styles.item}>{item.answer_text}</Text>
             </TouchableOpacity>
         }}
         />:
         null}
         <Button
-        title="Add a new Question"
+        title="Add a new Answer"
         onPress={() =>{
-          setQuestions(null)
-          navigation.navigate('CreateQuestion');
+          setAnswers(null)
+          navigation.navigate('CreateAnswer', {question_id : question_id});
         }}
         />
         </View>
@@ -58,7 +61,7 @@ const Community = ({navigation}) => {
 }
 
 
-export default Community
+export default ShowAnswers
 
 const styles = StyleSheet.create({
     container: {

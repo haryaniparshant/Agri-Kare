@@ -18,6 +18,9 @@ import { Provider as AuthProvider } from './src/context/AuthContext';
 import RecommendationPage from './src/screens/RecommendationPage';
 import PesticideDetail from './src/screens/PesticideDetail';
 import SearchCrop from './src/screens/SearchCrop';
+import CreateQuestion from './src/screens/CreateQuestion';
+import CreateAnswer from './src/screens/CreateAnswer';
+import ShowAnswers from './src/screens/ShowAnswers';
 
 const switchNavigator = createSwitchNavigator({
   Resolve: ResolveAuthScreen,
@@ -38,6 +41,9 @@ const switchNavigator = createSwitchNavigator({
     RecommendationPage: RecommendationPage,
     PesticideDetail: PesticideDetail,
     SearchCrop : SearchCrop,
+    CreateQuestion: CreateQuestion,
+    CreateAnswer : CreateAnswer,
+    ShowAnswers : ShowAnswers,
     },{
       initialRouteName: 'Homepage',
     }),
