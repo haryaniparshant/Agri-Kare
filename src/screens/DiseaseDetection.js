@@ -54,7 +54,7 @@ const pickImage = async () => {
         type: 'image/jpeg',
         name: 'photo.jpg',
       });
-      await fetch('https://9572-125-209-114-66.ngrok-free.app/upload',{
+      await fetch('https://777e-2406-d00-aaaa-a94d-29f3-efbb-85f0-69b4.ngrok-free.app/upload',{
           method: 'POST',
           body: formData,
           headers: {

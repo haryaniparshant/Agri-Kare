@@ -28,7 +28,6 @@ const Homepage = ({navigation}) => {
       <Text style={button1} onPress={signout}>
           Sign Out
       </Text>
-      {state.udata.isAdmin}
     
   </View>
   )
