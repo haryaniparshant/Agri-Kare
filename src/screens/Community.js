@@ -8,10 +8,9 @@ import { navigate } from '../navigationRef';
 
 
 
-const Community = ({navigation}) => {
+const Community = () => {
 
   const [questions, setQuestions] = useState(null);
-
   const getQuestions = async () => {
     try{
       const response = await jsonServer.get('/questions');
@@ -22,6 +21,10 @@ const Community = ({navigation}) => {
       console.log(e);
     }
   };
+  useEffect(()=>{
+  getQuestions();
+},[]);
+  
 
 //   useEffect(() => {
 //     getQuestions();
@@ -50,7 +53,7 @@ const Community = ({navigation}) => {
         title="Add a new Question"
         onPress={() =>{
           setQuestions(null)
-          navigation.navigate('CreateQuestion');
+          navigate('CreateQuestion');
         }}
         />
         </View>

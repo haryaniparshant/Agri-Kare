@@ -10,7 +10,6 @@ import Community from './src/screens/Community';
 import Verification from './src/screens/Verification';
 import DiseaseDetection from './src/screens/DiseaseDetection';
 import Homepage from './src/screens/Homepage';
-import Pending from './src/screens/Pending'; 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'; 
 import { createStackNavigator } from 'react-navigation-stack';
 import { setNavigator } from './src/navigationRef';
@@ -21,6 +20,10 @@ import SearchCrop from './src/screens/SearchCrop';
 import CreateQuestion from './src/screens/CreateQuestion';
 import CreateAnswer from './src/screens/CreateAnswer';
 import ShowAnswers from './src/screens/ShowAnswers';
+import SettingScreen from './src/screens/Setting';
+import Adminpage from './src/screens/Adminpage';
+import ApproveQuestions from './src/screens/ApproveQuestions';
+import ApproveAnswers from './src/screens/ApproveAnswers';
 
 const switchNavigator = createSwitchNavigator({
   Resolve: ResolveAuthScreen,
@@ -37,13 +40,16 @@ const switchNavigator = createSwitchNavigator({
     DiseaseDetection: DiseaseDetection,
     Community: Community,
     Homepage: Homepage,
-    Pending: Pending,
     RecommendationPage: RecommendationPage,
     PesticideDetail: PesticideDetail,
     SearchCrop : SearchCrop,
     CreateQuestion: CreateQuestion,
     CreateAnswer : CreateAnswer,
     ShowAnswers : ShowAnswers,
+    SettingScreen: SettingScreen,
+    Adminpage : Adminpage,
+    ApproveQuestions: ApproveQuestions,
+    ApproveAnswers: ApproveAnswers,
     },{
       initialRouteName: 'Homepage',
     }),

@@ -17,7 +17,7 @@ const ShowAnswers = ({navigation}) => {
 
   const getAnswers = async () => {
     try{
-      const response = await jsonServer.get('/answers');
+      const response = await jsonServer.post('/getanswers', { question_id : question_id});
       setAnswers(response.data);
       console.log(response.data);
     }

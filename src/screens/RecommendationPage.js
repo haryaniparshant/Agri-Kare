@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Button ,StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { ListItem } from "react-native-elements";
 import { navigate } from "../navigationRef";
+import cnnserver from "../common/cnnserver";
 
 
 
@@ -10,6 +11,9 @@ export default RecommendationPage = ({navigation}) => {
     const Disease = navigation.getParam('Disease');
 
     const [pesticides, setData] = useState(null);
+
+
+    console.log(cnnserver);
 
     const crop_disease = async () => {
         const formData = new FormData();
