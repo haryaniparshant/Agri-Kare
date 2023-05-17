@@ -13,6 +13,8 @@ const SettingScreen = ({navigation}) => {
     <Button 
     title="Sign Out"
     onPress={signout}
+    buttonStyle={styles.button}
+    titleStyle={styles.buttonText}
     />
     </View>
     );
@@ -27,6 +29,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  button: {
+    backgroundColor: 'green',
+    borderRadius: 5,
+    padding: 10,
+  },
+  buttonText: {
+      color: 'white',
+      fontWeight: 'bold',
+      textAlign: 'center',
   },
 });
 

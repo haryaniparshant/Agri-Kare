@@ -39,7 +39,12 @@ const switchNavigator = createSwitchNavigator({
   mainFlow: createStackNavigator({
     DiseaseDetection: DiseaseDetection,
     Community: Community,
-    Homepage: Homepage,
+    Homepage: {
+      screen: Homepage,
+      navigationOptions: {
+        headerShown: false, // Hide the header on Homepage
+      },
+    },
     RecommendationPage: RecommendationPage,
     PesticideDetail: PesticideDetail,
     SearchCrop : SearchCrop,

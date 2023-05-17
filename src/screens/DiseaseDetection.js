@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import RecommendationPage from "./RecommendationPage";
 import { navigate } from "../navigationRef";
+import { modelserver } from "../api/modelServer";
 
 
 
@@ -54,7 +55,7 @@ const pickImage = async () => {
         type: 'image/jpeg',
         name: 'photo.jpg',
       });
-      await fetch('https://777e-2406-d00-aaaa-a94d-29f3-efbb-85f0-69b4.ngrok-free.app/upload',{
+      await fetch(modelserver + '/upload',{
           method: 'POST',
           body: formData,
           headers: {
@@ -64,6 +65,7 @@ const pickImage = async () => {
         .then(response => response.json())
         .then(data => {
           console.log(data);
+          setImage(null);
           navigate('RecommendationPage',{Crop: data.Crop, Disease: data.Disease});
         })
         .catch(error => console.error(error));
@@ -76,15 +78,15 @@ const pickImage = async () => {
           <Camera style={{ flex: 1 }} type={Camera.Constants.Type.back} ref={cameraRef} />
         }
         {image?
-        <Button title="Capture New Image" onPress={removeImage} />:
-        <Button title="Capture" onPress={captureImage} />
+        <Button title="Capture New Image" onPress={removeImage} color="green" style={styles.button}/>:
+        <Button title="Capture" onPress={captureImage} color="green" style={styles.button}/>
         }
         {image?
-        <Button title="Send Image" onPress={sendImage} />:
+        <Button title="Send Image" onPress={sendImage} color="green" style={styles.button}/>:
         null
         }
         {!image?
-        <Button title="Upload Image" onPress={pickImage} />:
+        <Button title="Upload Image" onPress={pickImage} color="green" style={styles.button}/>:
         null
         }
       </View>
@@ -110,6 +112,9 @@ const styles = StyleSheet.create({
     height: '90%',
     width: '90%',
     margin: 15,
-  }
+  },
+  button: {
+    marginBottom: 10,
+  },
 });
 

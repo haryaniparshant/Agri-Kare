@@ -55,6 +55,8 @@ const Community = () => {
           setQuestions(null)
           navigate('CreateQuestion');
         }}
+        buttonStyle={styles.button}
+        titleStyle={styles.buttonText}
         />
         </View>
       );
@@ -75,4 +77,14 @@ const styles = StyleSheet.create({
          height: 44,
          marginLeft: 15,
        },
+       button: {
+        backgroundColor: 'green',
+        borderRadius: 5,
+        padding: 10,
+      },
+      buttonText: {
+          color: 'white',
+          fontWeight: 'bold',
+          textAlign: 'center',
+      },
 })

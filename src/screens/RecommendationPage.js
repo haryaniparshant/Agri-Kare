@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Button ,StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { ListItem } from "react-native-elements";
 import { navigate } from "../navigationRef";
-import cnnserver from "../common/cnnserver";
+import { modelserver } from "../api/modelServer";
 
 
 
@@ -12,14 +12,11 @@ export default RecommendationPage = ({navigation}) => {
 
     const [pesticides, setData] = useState(null);
 
-
-    console.log(cnnserver);
-
     const crop_disease = async () => {
         const formData = new FormData();
         formData.append("crop", Crop)
         formData.append("disease", Disease)
-        await fetch('https://777e-2406-d00-aaaa-a94d-29f3-efbb-85f0-69b4.ngrok-free.app/recommend',{
+        await fetch(modelserver + '/recommend',{
             method: 'POST',
             body: formData,
             headers: {

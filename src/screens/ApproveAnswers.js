@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, FlatList } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, FlatList,ScrollView } from 'react-native';
 import jsonServer from '../api/jsonServer';
 import { NavigationEvents } from 'react-navigation';
 
@@ -42,9 +42,6 @@ const ApproveAnswers = ({navigation}) => {
 
 
   return (<View style={styles.container}>
-    <Text style={styles.title}>
-        Answers
-      </Text>
       <NavigationEvents
         onWillFocus={getAnswers}
         />
@@ -53,6 +50,9 @@ const ApproveAnswers = ({navigation}) => {
         keyExtractor={item => item._id}
         renderItem={({item}) =>{
             return <View style={styles.fixToText}>
+                  <ScrollView horizontal>
+                    <Text> {item.answer_text} </Text>
+                  </ScrollView>
                   <Button
                     title="Accept"
                     onPress={() => {
@@ -60,9 +60,9 @@ const ApproveAnswers = ({navigation}) => {
                       Alert.alert('Accepted');
                       getAnswers;
                     }}
-                    style={styles.button}
+                    color="green"
                   />
-                  <Text> {item.answer_text}  </Text>
+                  <Text>   </Text>
                   <Button
                     title="Reject"
                     onPress={() => {
@@ -70,7 +70,7 @@ const ApproveAnswers = ({navigation}) => {
                       Alert.alert('Rejected');
                       getAnswers();
                     }}
-                    style={styles.button}
+                    color="red"
                   />
                 </View>
         }}
@@ -93,10 +93,11 @@ const styles = StyleSheet.create({
       fixToText: {
         padding:5,
         flexDirection: 'row',
-        justifyContent: 'center',
-        marginVertical:10
+        justifyContent: 'flex-end',
+        marginVertical:10,
       },
       button:{
         margin:40,
+        backgroundColor: 'green',
       }
 })

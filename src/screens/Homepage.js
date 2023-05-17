@@ -48,7 +48,7 @@ const Homepage = ({navigation}) => {
           component={DiseaseDetection}
           options={{
             tabBarLabel: ({ color }) => (
-              <Text style={{ color }}>Disease Detection</Text>
+              <Text style={{ color }}>Disease</Text>
             ),
         
             tabBarIcon: ({ color }) => (
@@ -61,7 +61,7 @@ const Homepage = ({navigation}) => {
           component={SearchCrop}
           options={{
             tabBarLabel: ({ color }) => (
-              <Text style={{ color }}>Search Crop</Text>
+              <Text style={{ color }}>Search</Text>
             ),
         
             tabBarIcon: ({ color }) => (

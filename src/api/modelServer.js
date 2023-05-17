@@ -1,8 +1,1 @@
-import axios from 'axios'
-
-export default axios.create({
-    baseURL: 'https://a3b7-2407-aa80-15-e0a2-18e4-ec36-1364-7f79.ngrok-free.app',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-})
+export const modelserver = 'https://56b8-2406-d00-aaaa-a94d-9402-d670-6886-f7a4.ngrok-free.app';

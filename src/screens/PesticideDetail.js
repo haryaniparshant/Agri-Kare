@@ -2,6 +2,7 @@ import { delay } from "lodash";
 import React, { useState,useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, ScrollView  } from 'react-native';
 import { ListItem } from "react-native-elements";
+import { modelserver } from "../api/modelServer";
 
 
 
@@ -15,7 +16,7 @@ const PesticideDetail = ({navigation}) => {
       const formData = new FormData();
       formData.append("Brand", Detail.Brand);
       formData.append("Brand_Name", Detail.Brand_Name);
-      await fetch('https://777e-2406-d00-aaaa-a94d-29f3-efbb-85f0-69b4.ngrok-free.app/detail',{
+      await fetch(modelserver + '/detail',{
           method: 'POST',
           body: formData,
           headers: {
